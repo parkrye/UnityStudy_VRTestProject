@@ -7,6 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class InteractorController : MonoBehaviour
 {
+    [SerializeField] XRDirectInteractor directInteractor;
     [SerializeField] XRRayInteractor rayInteractor;
     [SerializeField] XRRayInteractor teleportInteractor;
 
@@ -30,8 +31,8 @@ public class InteractorController : MonoBehaviour
     {
         if (rayInteractor != null)
         {
-            rayInteractor.selectEntered.AddListener(DisableLocomotions);
-            rayInteractor.selectExited.AddListener(EnableLocomotions);
+            rayInteractor.selectEntered.AddListener(OnRaySelectEnter);
+            rayInteractor.selectExited.AddListener(OnRaySelectExit);
         }
 
         InputAction teleportModeActivate = this.teleportModeActivate?.action;
@@ -46,8 +47,8 @@ public class InteractorController : MonoBehaviour
     {
         if (rayInteractor != null)
         {
-            rayInteractor.selectEntered.RemoveListener(DisableLocomotions);
-            rayInteractor.selectExited.RemoveListener(EnableLocomotions);
+            rayInteractor.selectEntered.RemoveListener(OnRaySelectEnter);
+            rayInteractor.selectExited.RemoveListener(OnRaySelectExit);
         }
 
         InputAction teleportModeActivate = this.teleportModeActivate?.action;
@@ -58,19 +59,7 @@ public class InteractorController : MonoBehaviour
         }
     }
 
-    private void EnableLocomotions(SelectExitEventArgs args)
-    {
-        foreach (LocomotionProvider locomotion in locomotions)
-        {
-            locomotion.gameObject.SetActive(true);
-        }
-
-        InputAction teleportModeActivate = this.teleportModeActivate?.action;
-        if (teleportModeActivate != null)
-            teleportModeActivate.Disable();
-    }
-
-    private void DisableLocomotions(SelectEnterEventArgs args)
+    private void OnRaySelectEnter(SelectEnterEventArgs args)
     {
         foreach (LocomotionProvider locomotion in locomotions)
         {
@@ -80,6 +69,18 @@ public class InteractorController : MonoBehaviour
         InputAction teleportModeActivate = this.teleportModeActivate?.action;
         if (teleportModeActivate != null)
             teleportModeActivate.Enable();
+    }
+
+    private void OnRaySelectExit(SelectExitEventArgs args)
+    {
+        foreach (LocomotionProvider locomotion in locomotions)
+        {
+            locomotion.gameObject.SetActive(true);
+        }
+
+        InputAction teleportModeActivate = this.teleportModeActivate?.action;
+        if (teleportModeActivate != null)
+            teleportModeActivate.Disable();
     }
 
     private void OnStartTeleport(CallbackContext context)
