@@ -7,6 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class InteractorController : MonoBehaviour
 {
+    [SerializeField] bool useTeleport;
     [SerializeField] XRDirectInteractor directInteractor;
     [SerializeField] XRRayInteractor rayInteractor;
     [SerializeField] XRRayInteractor teleportInteractor;
@@ -17,6 +18,8 @@ public class InteractorController : MonoBehaviour
 
     private void Start()
     {
+        if (!useTeleport)
+            return;
         if (rayInteractor != null)
         {
             rayInteractor.gameObject.SetActive(true);
@@ -29,6 +32,8 @@ public class InteractorController : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!useTeleport)
+            return;
         if (rayInteractor != null)
         {
             rayInteractor.selectEntered.AddListener(OnRaySelectEnter);
@@ -45,6 +50,8 @@ public class InteractorController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (!useTeleport)
+            return;
         if (rayInteractor != null)
         {
             rayInteractor.selectEntered.RemoveListener(OnRaySelectEnter);
@@ -61,6 +68,8 @@ public class InteractorController : MonoBehaviour
 
     private void OnRaySelectEnter(SelectEnterEventArgs args)
     {
+        if (!useTeleport)
+            return;
         foreach (LocomotionProvider locomotion in locomotions)
         {
             locomotion.gameObject.SetActive(false);
@@ -73,6 +82,8 @@ public class InteractorController : MonoBehaviour
 
     private void OnRaySelectExit(SelectExitEventArgs args)
     {
+        if (!useTeleport)
+            return;
         foreach (LocomotionProvider locomotion in locomotions)
         {
             locomotion.gameObject.SetActive(true);
@@ -85,6 +96,8 @@ public class InteractorController : MonoBehaviour
 
     private void OnStartTeleport(CallbackContext context)
     {
+        if (!useTeleport)
+            return;
         if (rayInteractor != null)
             rayInteractor.gameObject.SetActive(false);
         if (teleportInteractor != null)
@@ -93,6 +106,8 @@ public class InteractorController : MonoBehaviour
 
     private void OnStopTeleport(CallbackContext context)
     {
+        if (!useTeleport)
+            return;
         if (rayInteractor != null)
             rayInteractor.gameObject.SetActive(true);
         if (teleportInteractor != null)

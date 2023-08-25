@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18387039, g: 0.22902612, b: 0.30317035, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1847,6 +1847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f20589ff9587a47a84929a524f36f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directInteractor: {fileID: 0}
   rayInteractor: {fileID: 50088709}
   teleportInteractor: {fileID: 0}
   locomotions:
@@ -3289,6 +3290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f20589ff9587a47a84929a524f36f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directInteractor: {fileID: 0}
   rayInteractor: {fileID: 863481840}
   teleportInteractor: {fileID: 1512018113}
   locomotions:
